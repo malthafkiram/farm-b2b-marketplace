@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Ternak</title>
+    <%- include('_style') %>
+</head>
+
+<body>
+    <%- include('_navbar') %>
+        <div class="container mt-5">
+
+            <% if (notification) { %>
+                <div
+                    style="background-color: #d4edda; color: #155724; padding: 12px; border: 1px solid #c3e6cb; border-radius: 5px; margin-bottom: 15px; width: fit-content; font-weight: bold;">
+                    ✓ <%= notification %>
+                </div>
+                <% } %>
+
+                    <!-- Header Section -->
+                    <div
+                        class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center mb-4 gap-3">
+                        <% if (userRole==='Seller' ) { %>
+                            <h1 class="page-title">Daftar Ternak Tersedia</h1>
+                            <% } else { %>
+                                <h1 class="page-title">Cart</h1>
+                                <% } %>
+
+                                    <div>
+                                    </div>
+                                    <div class="d-flex gap-2">
+                                        <% if (userRole==='Seller' ) { %>
+                                            <a href="/stock/add" class="btn-neo-action btn-add-ternak">+ Tambah Hewan
+                                                Ternak Baru</a>
+                                            <% } %>
+
+                                                <% if (userRole==='Buyer' ) { %>
+                                                    <a href="/transactions/history"
+                                                        class="btn-neo-action btn-add-ternak"><button>Lihat
+                                                            Riwayat Pembelian</button></a>
+                                                    <% } %>
+                                    </div>
+                    </div>
+
+
+                    <!-- Table Section -->
+                    <div class="table-responsive table-responsive-neo">
+                        <table class="table table-neo align-middle">
+                            <thead>
+                                <tr>
+                                    <th style="width: 60px;">No.</th>
+                                    <th>Foto Hewan Ternak</th>
+                                    <th>Nama Ternak</th>
+                                    <th>Jenis</th>
+                                    <th>Jenis Kelamin</th>
+                                    <th>Harga</th>
+                                    <th>Description</th>
+                                    <th>Penjual / Pemilik</th>
+                                    <th>Status</th>
+                                    <th style="width: 180px; text-align: center;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% if (livestocks.length===0) { %>
+                                    <tr>
+                                        <td colspan="8" class="text-center py-4 fw-bold">
+                                            Tidak ada ternak yang tersedia saat ini.
+                                        </td>
+                                    </tr>
+                                    <% } else { %>
+                                        <% livestocks.forEach((animal, index)=> { %>
+                                            <tr>
+                                                <td class="fw-bold">
+                                                    <%= index + 1 %>
+                                                </td>
+                                                <td>
+                                                    <% if (animal.imageUrl) { %>
+                                                        <img src="<%= animal.imageUrl %>" alt="Foto Ternak"
+                                                            style="width: 100px; height: 80px; object-fit: cover; border-radius: 5px; border: 1px solid #ccc;">
+                                                        <% } else { %>
+                                                            <span
+                                                                style="color: gray; font-style: italic; font-size: 12px;">Tidak
+                                                                ada foto</span>
+                                                            <% } %>
+                                                </td>
+                                                <td class="fw-bold text-uppercase">
+                                                    <%= animal.name %>
+                                                </td>
+                                                <td>
+                                                    <%= animal.type %>
+                                                </td>
+                                                <td>
+                                                    <%= animal.gender || '-' %>
+                                                </td>
+                                                <td class="fw-bold text-success">
+                                                    <%= formatRupiah(animal.price) %>
+                                                </td>
+                                                <td>
+                                                    <%= animal.description %>
+                                                </td>
+                                                <td>
+                                                    <%= animal.User && animal.User.UserProfile ?
+                                                        animal.User.UserProfile.fullName : 'Tanpa Pemilik' %>
+                                                </td>
+                                                <td>
+                                                    <span class="badge-status">
+                                                        <%= animal.status %>
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex justify-content-center gap-3">
+                                                        <% if (userRole==='Buyer' ) { %>
+                                                            <a href="/stock/buy/<%= animal.id %>"
+                                                                class="btn btn-table-neo btn-table-buy">Beli</a>
+                                                            <% } %>
+                                                                <% if (userRole==='Seller' ) { %>
+                                                                    <a href="/stock/edit/<%= animal.id %>"
+                                                                        class="btn btn-table-neo btn-warning">Edit</a>
+
+                                                                    <a href="/stock/delete/<%= animal.id %>"
+                                                                        onclick="return confirm('Apakah Anda yakin ingin menghapus ternak ini?')"
+                                                                        class="btn btn-table-neo btn-table-delete">Hapus</a>
+                                                                    <% } %>
+
+                                                                        <% if (!userRole) { %>
+                                                                            <a href="/stock/buy/<%= animal.id %>"
+                                                                                class="btn btn-table-neo btn-table-buy">Silakan
+                                                                                login untuk bertransaksi</a>
+                                                                            <% } %>
+
+
+
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <% }) %>
+                                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+
+        </div>
+
+        <!-- Bootstrap 5 JS Bundle -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

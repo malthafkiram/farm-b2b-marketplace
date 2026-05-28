@@ -1,0 +1,62 @@
+<nav class="neo-navbar" style="border-bottom: 1px solid black; ">
+  <div class="d-flex align-items-center justify-content-between w-100">
+
+    <!-- LOGO -->
+    <a class="navbar-brand neo-brand" href="/">
+      Qurbani
+    </a>
+
+    <!-- SEARCH -->
+    <div class="flex-grow-1 mx-3 d-flex justify-content-center">
+      <form class="neo-search w-100" style="max-width: 600px;">
+        <div class="input-group">
+          <input type="text" class="form-control neo-input" placeholder="Cari ternak... ayam, kambing, sapi..." />
+          <button class="btn neo-btn-search" type="submit">
+            SEARCH
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- RIGHT SECTION -->
+    <div class="d-flex align-items-center gap-3 ">
+
+      <!-- USER INFO -->
+      <% if (isLogin) { %>
+        <div class="me-5" style="display: flex; gap: 5px;  ">
+          <p class="m-0 p-0">Welcome, <%= user.UserProfile.fullName %>
+          </p>
+        </div>
+        <% } %>
+
+          <% if (userRole==='Seller' ) { %>
+            <a href="/stock" class="neo-cart-icon d-flex align-items-center justify-content-center"
+              style="width: 45px;">
+              <i class="bi bi-plus-square"></i>
+            </a>
+            <% } else { %>
+              <!-- CART -->
+              <a href="/stock" class="neo-cart-icon d-flex align-items-center justify-content-center"
+                style="width: 45px;">
+                <i class="bi bi-cart3"></i>
+              </a>
+              <% } %>
+
+
+                <!-- AUTH BUTTONS -->
+                <% if (isLogin) { %>
+                  <a href="/logout" class="btn btn-neo btn-neo-login">
+                    Logout
+                  </a>
+                  <% } else { %>
+                    <a href="/login" class="btn btn-neo btn-neo-login">
+                      Login
+                    </a>
+                    <a href="/register" class="btn btn-neo btn-neo-register">
+                      Register
+                    </a>
+                    <% } %>
+
+    </div>
+  </div>
+</nav>

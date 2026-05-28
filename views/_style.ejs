@@ -1,0 +1,506 @@
+<!-- Bootstrap 5 CSS -->
+<link
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+  rel="stylesheet"
+/>
+
+<!-- Google Fonts -->
+<link
+  href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap"
+  rel="stylesheet"
+/>
+
+<!-- Icon -->
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+/>
+
+<style>
+  :root {
+    --bg-color: #f4f1de;
+    --primary-yellow: #ffde4d;
+    --accent-purple: #9b5de5; /* tambahan */
+    --accent-pink: #ff6b6b;
+    --accent-green: #80ed99;
+    --accent-blue: #64b5f6;
+    --dark-border: #1a1a1a;
+  }
+
+  body {
+    background-color: var(--bg-color);
+    font-family: "Space Grotesk", sans-serif;
+    padding-bottom: 50px;
+  }
+
+  .content {
+    padding: 20px;
+  }
+
+  /* ================= NAVBAR ================= */
+
+  .neo-navbar {
+    padding: 20px;
+  }
+
+  .neo-brand {
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: var(--dark-border) !important;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+    padding: 5px 10px;
+    border: 3px solid transparent;
+    transition: all 0.2s ease;
+  }
+
+  .neo-brand:hover {
+    background-color: var(--accent-pink);
+    border-color: var(--dark-border);
+    transform: rotate(-2deg) scale(1.05);
+    box-shadow: 4px 4px 0px var(--dark-border);
+  }
+
+  .btn-neo {
+    font-weight: 700;
+    text-transform: uppercase;
+    border: 3px solid var(--dark-border) !important;
+    border-radius: 0px !important;
+    padding: 8px 20px !important;
+    transition: all 0.15s ease;
+  }
+
+  .btn-neo-login {
+    background-color: #ffffff;
+    color: var(--dark-border);
+    margin-right: 0px;
+    box-shadow: 4px 4px 0px var(--dark-border);
+  }
+
+  .btn-neo-login:hover {
+    background-color: var(--dark-border);
+    color: #ffffff;
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px var(--dark-border);
+  }
+
+  .btn-neo-register {
+    background-color: var(--primary-yellow);
+    color: var(--dark-border);
+    box-shadow: 4px 4px 0px var(--dark-border);
+  }
+
+  .btn-neo-register:hover {
+    background-color: #ffffff;
+    transform: translate(-4px, -4px) rotate(1deg);
+    box-shadow: 8px 8px 0px var(--dark-border);
+  }
+
+  /* ================= HERO ================= */
+
+  .hero-box {
+    border: 4px solid var(--dark-border);
+    background: #fff;
+    box-shadow: 8px 8px 0px var(--dark-border);
+  }
+
+  /* ================= CARD ================= */
+
+  .neo-card {
+    border: 4px solid var(--dark-border);
+    border-radius: 0;
+    overflow: hidden;
+    background: white;
+    box-shadow: 8px 8px 0px var(--dark-border);
+    transition: all 0.2s ease;
+    height: 100%;
+  }
+
+  .neo-card:hover {
+    transform: translate(-6px, -6px) rotate(-1deg);
+    box-shadow: 14px 14px 0px var(--dark-border);
+  }
+
+  .neo-card img {
+    height: 220px;
+    object-fit: cover;
+    border-bottom: 4px solid var(--dark-border);
+  }
+
+  .card-title {
+    font-weight: 700;
+    font-size: 1.2rem;
+  }
+
+  .animal-tag {
+    display: inline-block;
+    padding: 6px 12px;
+    border: 3px solid var(--dark-border);
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+  }
+
+  .tag-yellow {
+    background: var(--primary-yellow);
+  }
+
+  .tag-pink {
+    background: var(--accent-pink);
+  }
+
+  .tag-green {
+    background: var(--accent-green);
+  }
+
+  .tag-blue {
+    background: var(--accent-blue);
+  }
+
+  .price {
+    font-size: 1.4rem;
+    font-weight: 700;
+  }
+
+  .btn-buy {
+    width: 100%;
+    border: 3px solid var(--dark-border);
+    border-radius: 0;
+    background: var(--primary-yellow);
+    font-weight: 700;
+    padding: 10px;
+    box-shadow: 4px 4px 0px var(--dark-border);
+    transition: all 0.15s ease;
+  }
+
+  .btn-buy:hover {
+    transform: translate(-3px, -3px);
+    background: var(--accent-pink);
+    box-shadow: 7px 7px 0px var(--dark-border);
+  }
+
+  .btn-buy:active {
+    transform: translate(3px, 3px);
+    box-shadow: 0px 0px 0px var(--dark-border);
+  }
+
+  /* ================= SEARCH ================= */
+
+  .neo-search {
+    width: 100%;
+  }
+
+  .neo-input {
+    border: 3px solid var(--dark-border) !important;
+    border-radius: 0 !important;
+    padding: 12px;
+    font-weight: 500;
+    box-shadow: none !important;
+  }
+
+  .neo-input:focus {
+    background-color: #fff;
+    border-color: var(--dark-border);
+    box-shadow: 4px 4px 0px var(--dark-border) !important;
+  }
+
+  .neo-btn-search {
+    border: 3px solid var(--dark-border) !important;
+    border-left: none !important;
+    border-radius: 0 !important;
+    background: var(--primary-yellow);
+    font-weight: 700;
+    padding: 0 20px;
+    box-shadow: 4px 4px 0px var(--dark-border);
+    transition: all 0.15s ease;
+  }
+
+  .neo-btn-search:hover {
+    background: var(--accent-pink);
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px var(--dark-border);
+  }
+
+  .neo-btn-search:active {
+    transform: translate(2px, 2px);
+    box-shadow: 0px 0px 0px var(--dark-border);
+  }
+
+  /* ================= TABLE ================= */
+
+  .table-responsive-neo {
+    background-color: #ffffff;
+    border: 4px solid var(--dark-border);
+    box-shadow: 12px 12px 0px var(--dark-border);
+    margin-top: 20px;
+
+    opacity: 0;
+    transform: translateY(20px);
+    animation: tablePopUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.2s
+      forwards;
+  }
+
+  .table-neo {
+    margin-bottom: 0px !important;
+  }
+
+  .table-neo thead th {
+    background-color: var(--primary-yellow) !important;
+    color: var(--dark-border) !important;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-bottom: 4px solid var(--dark-border) !important;
+    border-right: 2px solid var(--dark-border);
+    padding: 15px;
+  }
+
+  .table-neo tbody td {
+    border-bottom: 3px solid var(--dark-border) !important;
+    border-right: 2px solid var(--dark-border);
+    padding: 15px;
+    font-weight: 500;
+    vertical-align: middle;
+    color: var(--dark-border);
+  }
+
+  .table-neo tbody tr:last-child td {
+    border-bottom: none !important;
+  }
+
+  .table-neo tbody tr:hover {
+    background-color: rgba(155, 93, 229, 0.08); /* disamakan */
+  }
+
+  /* ================= RECEIPT CODE ================= */
+
+  .neo-receipt-code {
+    font-family: "Space Grotesk", monospace;
+    background-color: var(--primary-yellow);
+    color: var(--dark-border);
+    font-weight: 700;
+    padding: 4px 8px;
+    border: 2px solid var(--dark-border);
+    box-shadow: 2px 2px 0px var(--dark-border);
+    display: inline-block;
+  }
+
+  /* ================= DELETED TEXT ================= */
+
+  .text-deleted-animal {
+    color: var(--accent-pink);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+  }
+
+  /* ================= BADGE ================= */
+
+  .badge-status {
+    display: inline-block;
+    padding: 5px 10px;
+    border: 2px solid var(--dark-border);
+    font-weight: 700;
+    text-transform: uppercase;
+    background-color: var(--primary-yellow);
+    box-shadow: 2px 2px 0px var(--dark-border);
+  }
+
+  /* ================= BUTTON TABLE ================= */
+
+  .btn-table-neo {
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    padding: 6px 12px;
+    border: 2px solid var(--dark-border) !important;
+    border-radius: 0px !important;
+    box-shadow: 3px 3px 0px var(--dark-border);
+    transition: all 0.1s ease;
+  }
+
+  .btn-table-neo:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 4px 4px 0px var(--dark-border);
+  }
+
+  .btn-table-neo:active {
+    transform: translate(2px, 2px);
+    box-shadow: 0px 0px 0px var(--dark-border);
+  }
+
+  .btn-table-buy {
+    background-color: #a7c957;
+    color: var(--dark-border);
+  }
+
+  .btn-table-delete {
+    background-color: #f7a0a0;
+    color: var(--dark-border);
+  }
+
+  /* ================= ICON ================= */
+
+  .neo-cart-icon {
+    font-size: 1.5rem;
+    color: var(--dark-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary-yellow);
+    padding: 2px;
+    border: 3px solid var(--dark-border);
+
+    box-shadow: 4px 4px 0px var(--dark-border);
+    transition: 0.15s ease;
+  }
+
+  .neo-cart-icon:hover {
+    transform: translate(-3px, -3px);
+    background: var(--accent-pink);
+  }
+
+  /* ================= TITLE ================= */
+
+  .page-title {
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 2rem;
+    letter-spacing: -1px;
+    display: inline-block;
+    background-color: var(--accent-purple); /* disamakan */
+    color: #ffffff;
+    padding: 8px 20px;
+    border: 4px solid var(--dark-border);
+    box-shadow: 6px 6px 0px var(--dark-border);
+    transform: rotate(-0.5deg);
+    margin-bottom: 30px;
+  }
+
+  /* ================= ACTION BUTTON ================= */
+
+  .btn-neo-action {
+    font-weight: 700;
+    text-transform: uppercase;
+    border: 3px solid var(--dark-border) !important;
+    border-radius: 0px !important;
+    padding: 10px 20px;
+    box-shadow: 4px 4px 0px var(--dark-border);
+    transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-neo-action:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px var(--dark-border);
+  }
+
+  .btn-neo-action:active {
+    transform: translate(4px, 4px);
+    box-shadow: 0px 0px 0px var(--dark-border);
+  }
+
+  .btn-add-ternak {
+    background-color: var(--accent-green);
+    color: #fff !important;
+  }
+
+  .btn-add-ternak:hover {
+    background-color: #25a195;
+  }
+
+  .btn-logout {
+    background-color: var(--accent-pink);
+    color: #fff !important;
+  }
+
+  .btn-logout:hover {
+    background-color: #e05353;
+  }
+
+  /* ================= BACK BUTTON ================= */
+
+  .btn-neo-back {
+    font-weight: 700;
+    text-transform: uppercase;
+    background-color: #ffffff;
+    color: var(--dark-border) !important;
+    border: 3px solid var(--dark-border) !important;
+    border-radius: 0px !important;
+    padding: 10px 20px;
+    box-shadow: 4px 4px 0px var(--dark-border);
+    transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-neo-back:hover {
+    background-color: var(--primary-yellow);
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px var(--dark-border);
+  }
+
+  .btn-neo-back:active {
+    transform: translate(4px, 4px);
+    box-shadow: 0px 0px 0px var(--dark-border);
+  }
+
+  /* ================= SEARCH CONTAINER ================= */
+
+  .search-container {
+    background-color: #ffffff;
+    border: 4px solid var(--dark-border);
+    box-shadow: 8px 8px 0px var(--dark-border);
+    padding: 20px;
+    margin-bottom: 40px;
+  }
+
+  .neo-input-search {
+    border: 3px solid var(--dark-border) !important;
+    border-radius: 0px !important;
+    padding: 12px;
+    font-weight: 500;
+  }
+
+  .neo-input-search:focus {
+    box-shadow: 4px 4px 0px var(--dark-border) !important;
+    background-color: #fff;
+    outline: none;
+  }
+
+  .btn-search-submit {
+    background-color: var(--primary-yellow);
+    color: var(--dark-border);
+  }
+
+  .btn-search-reset {
+    background-color: #ffffff;
+    color: var(--dark-border);
+  }
+
+  /* ================= ANIMATION ================= */
+
+  @keyframes slideInDown {
+    0% {
+      transform: translateY(-60px) scale(0.95);
+      opacity: 0;
+    }
+
+    100% {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes tablePopUp {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>

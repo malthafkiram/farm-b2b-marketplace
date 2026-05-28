@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moo-Mart - Edit Ternak</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght=500;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #f4f1de;
+            /* Warna koran mentah */
+            --primary-yellow: #ffde4d;
+            /* Kuning terang */
+            --accent-orange: #f28482;
+            /* Orange/Pink pop */
+            --accent-blue: #3a86ff;
+            /* Biru pop */
+            --accent-pink: #ff6b6b;
+            /* Pink pekat */
+            --dark-border: #1a1a1a;
+            /* Border hitam pekat */
+        }
+
+        body {
+            background-color: var(--bg-color);
+            font-family: 'Space Grotesk', sans-serif;
+            padding: 20px;
+        }
+
+        /* --- NEOBRUTALISM FORM CARD --- */
+        .neo-form-card {
+            background-color: #ffffff;
+            border: 4px solid var(--dark-border);
+            box-shadow: 12px 12px 0px 0px var(--dark-border);
+            border-radius: 0px;
+            padding: 40px;
+            margin-top: 30px;
+            margin-bottom: 50px;
+
+            /* Animasi Masuk Pop-Up */
+            opacity: 0;
+            transform: scale(0.95) translateY(20px);
+            animation: formPopIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        .form-title {
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 1.8rem;
+            letter-spacing: -1px;
+            display: inline-block;
+            background-color: var(--primary-yellow);
+            padding: 8px 15px;
+            border: 3px solid var(--dark-border);
+            box-shadow: 4px 4px 0px var(--dark-border);
+            transform: rotate(-1.5deg);
+            margin-bottom: 35px;
+        }
+
+        /* --- ERROR BOX STYLE --- */
+        .neo-error-box {
+            background-color: #ffccd5;
+            color: var(--dark-border);
+            border: 3px solid var(--dark-border);
+            box-shadow: 4px 4px 0px var(--dark-border);
+            padding: 15px 20px;
+            border-radius: 0px;
+            margin-bottom: 30px;
+        }
+
+        .neo-error-box h4 {
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .neo-error-box ul {
+            margin-bottom: 0;
+            padding-left: 20px;
+            font-weight: 500;
+        }
+
+        /* --- FORM CONTROLS --- */
+        .neo-label {
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--dark-border);
+            margin-bottom: 8px;
+            display: block;
+            font-size: 0.95rem;
+        }
+
+        .neo-input {
+            border: 3px solid var(--dark-border) !important;
+            border-radius: 0px !important;
+            padding: 12px 15px;
+            font-weight: 500;
+            background-color: #ffffff;
+            color: var(--dark-border);
+            transition: all 0.15s ease;
+        }
+
+        .neo-input:focus {
+            outline: none !important;
+            box-shadow: 4px 4px 0px 0px var(--dark-border) !important;
+            background-color: #fff7d6;
+            transform: translate(-2px, -2px);
+        }
+
+        .neo-textarea {
+            resize: none;
+            min-height: 120px;
+        }
+
+        /* Dropdown Kustom */
+        .neo-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%231a1a1a' stroke-width='3' stroke-linecap='square' stroke-linejoin='miter'><path d='M6 9l6 6 6-6'/></svg>");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            cursor: pointer;
+        }
+
+        /* Input Group Prefix (Rp) */
+        .neo-input-group-text {
+            background-color: var(--dark-border) !important;
+            color: #ffffff !important;
+            border: 3px solid var(--dark-border) !important;
+            border-radius: 0px !important;
+            font-weight: 700;
+        }
+
+        /* --- CURRENT IMAGE PREVIEW --- */
+        .neo-img-preview {
+            border: 4px solid var(--dark-border);
+            box-shadow: 4px 4px 0px var(--dark-border);
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+
+        /* --- FILE UPLOAD BOX --- */
+        .neo-file-upload-wrapper {
+            position: relative;
+            width: 100%;
+            border: 3px dashed var(--dark-border);
+            background-color: #ffffff;
+            padding: 25px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .neo-file-upload-wrapper:hover {
+            background-color: #fff7d6;
+            border-style: solid;
+        }
+
+        .neo-file-input-hidden {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .neo-file-upload-icon {
+            font-size: 1.8rem;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .neo-file-upload-text {
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            color: var(--dark-border);
+        }
+
+        .neo-file-upload-info {
+            font-size: 0.8rem;
+            display: block;
+            margin-top: 5px;
+            font-weight: 500;
+            color: #666;
+        }
+
+        /* --- BUTTONS STYLE --- */
+        .btn-neo-group {
+            font-weight: 700;
+            text-transform: uppercase;
+            border: 3px solid var(--dark-border) !important;
+            border-radius: 0px !important;
+            padding: 12px 25px !important;
+            box-shadow: 4px 4px 0px var(--dark-border);
+            transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .btn-neo-group:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: 7px 7px 0px var(--dark-border);
+        }
+
+        .btn-neo-group:active {
+            transform: translate(4px, 4px);
+            box-shadow: 0px 0px 0px var(--dark-border);
+        }
+
+        .btn-neo-save {
+            background-color: #a7c957;
+            /* Hijau Brutalis */
+            color: var(--dark-border);
+        }
+
+        .btn-neo-save:hover {
+            background-color: var(--accent-blue);
+            color: #fff;
+        }
+
+        .btn-neo-cancel {
+            background-color: #ffffff;
+            color: var(--dark-border);
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .btn-neo-cancel:hover {
+            background-color: var(--accent-orange);
+        }
+
+        /* --- KEYFRAMES ANIMATION --- */
+        @keyframes formPopIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.95) translateY(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+    </style>
+    <%- include('_style') %>
+</head>
+
+<body>
+
+    <%- include('_navbar') %>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-6">
+
+                    <div class="card neo-form-card">
+
+                        <div class="text-center">
+                            <h2 class="form-title">Edit Data Hewan Ternak</h2>
+                        </div>
+
+                        <!-- Blok Tampilan Error -->
+                        <% if (errors) { %>
+                            <div class="neo-error-box">
+                                <h4>Gagal Memperbarui Data:</h4>
+                                <ul>
+                                    <% JSON.parse(errors).forEach(err=> { %>
+                                        <li>
+                                            <%= err %>
+                                        </li>
+                                        <% }) %>
+                                </ul>
+                            </div>
+                            <% } %>
+
+                                <form action="/stock/edit/<%= animal.id %>" method="POST" enctype="multipart/form-data">
+
+                                    <!-- Field Nama -->
+                                    <div class="mb-4">
+                                        <label class="neo-label">Nama Ternak / Label:</label>
+                                        <input type="text" name="name" class="form-control neo-input"
+                                            value="<%= animal.name %>" placeholder="Contoh: Sapi Limousin Jumbo">
+                                    </div>
+
+                                    <!-- Field Jenis Hewan -->
+                                    <div class="mb-4">
+                                        <label class="neo-label">Jenis Hewan:</label>
+                                        <select name="type" class="form-select neo-input neo-select">
+                                            <option value="Sapi" <%=animal.type==='Sapi' ? 'selected' : '' %>>Sapi
+                                            </option>
+                                            <option value="Kambing" <%=animal.type==='Kambing' ? 'selected' : '' %>
+                                                >Kambing</option>
+                                            <option value="Domba" <%=animal.type==='Domba' ? 'selected' : '' %>>Domba
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                    <!-- Field Harga Jual -->
+                                    <div class="mb-4">
+                                        <label class="neo-label">Harga Jual (Rp):</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text neo-input-group-text">Rp</span>
+                                            <input type="number" name="price" class="form-control neo-input"
+                                                value="<%= animal.price %>" placeholder="Contoh: 15000000">
+                                        </div>
+                                    </div>
+
+                                    <!-- Field Deskripsi -->
+                                    <div class="mb-4">
+                                        <label class="neo-label">Deskripsi / Catatan Kondisi:</label>
+                                        <textarea name="description"
+                                            class="form-control neo-input neo-textarea"><%= animal.description || '' %></textarea>
+                                    </div>
+
+                                    <!-- Field Manajemen Foto -->
+                                    <div class="mb-5">
+                                        <label class="neo-label">Foto Saat Ini:</label>
+                                        <div class="mb-3">
+                                            <% if (animal.imageUrl) { %>
+                                                <img src="<%= animal.imageUrl %>" width="150" height="110"
+                                                    class="neo-img-preview" alt="Foto Hewan">
+                                                <% } %>
+
+
+                                                    <label class="neo-label">Ganti Foto Baru:</label>
+                                                    <div class="neo-file-upload-wrapper">
+
+                                                        <span class="neo-file-upload-info">Kosongkan jika tidak ingin
+                                                            mengubah foto
+                                                            lama</span>
+
+                                                        <input type="file" name="image" id="neo-image-input"
+                                                            class="neo-file-input-hidden" accept="image/*">
+                                                    </div>
+                                        </div>
+
+                                        <!-- Tombol Aksi -->
+                                        <div class="d-flex flex-column flex-sm-row gap-3 justify-content-end">
+                                            <a href="/stock"
+                                                class="btn btn-neo-group btn-neo-cancel order-2 order-sm-1">←
+                                                Batal</a>
+                                            <button type="submit"
+                                                class="btn btn-neo-group btn-neo-save order-1 order-sm-2">Perbarui Data
+                                                Ternak</button>
+                                        </div>
+
+                                </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+            // Script interaktif nama file upload
+            const fileInput = document.getElementById('neo-image-input');
+            const fileLabel = document.getElementById('file-label-text');
+
+            fileInput.addEventListener('change', function () {
+                if (this.files && this.files.length > 0) {
+                    fileLabel.textContent = "✓ TERPILIH: " + this.files[0].name;
+                    fileLabel.style.color = "#3a86ff";
+                } else {
+                    fileLabel.textContent = "Klik/Seret foto baru untuk mengganti";
+                    fileLabel.style.color = "#1a1a1a";
+                }
+            });
+        </script>
+</body>
+
+</html>
