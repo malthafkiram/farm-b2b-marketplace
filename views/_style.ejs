@@ -20,7 +20,7 @@
   :root {
     --bg-color: #f4f1de;
     --primary-yellow: #ffde4d;
-    --accent-purple: #9b5de5; /* tambahan */
+    --accent-purple: #9b5de5;
     --accent-pink: #ff6b6b;
     --accent-green: #80ed99;
     --accent-blue: #64b5f6;
@@ -30,11 +30,15 @@
   body {
     background-color: var(--bg-color);
     font-family: "Space Grotesk", sans-serif;
-    padding-bottom: 50px;
   }
 
   .content {
     padding: 20px;
+  }
+
+  a {
+    text-decoration: none;
+    color: #1a1a1a;
   }
 
   /* ================= NAVBAR ================= */
@@ -77,6 +81,22 @@
     box-shadow: 4px 4px 0px var(--dark-border);
   }
 
+  .neo-login-card {
+    background-color: #ffffff;
+    border: 4px solid var(--dark-border);
+    box-shadow: 12px 12px 0px 0px var(--dark-border);
+    border-radius: 0px;
+    padding: 40px;
+    margin-top: 60px;
+    margin-bottom: 50px;
+
+    /* Animasi Pop-Up Masuk saat Page Load (Sama seperti Register) */
+    opacity: 0;
+    transform: scale(0.9) translateY(30px);
+    animation: popUpIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.1s
+      forwards;
+  }
+
   .btn-neo-login:hover {
     background-color: var(--dark-border);
     color: #ffffff;
@@ -112,7 +132,7 @@
     overflow: hidden;
     background: white;
     box-shadow: 8px 8px 0px var(--dark-border);
-    transition: all 0.2s ease;
+    transition: 0.2s ease;
     height: 100%;
   }
 
@@ -132,6 +152,22 @@
     font-size: 1.2rem;
   }
 
+  .login-title {
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 2rem;
+    letter-spacing: -1px;
+    display: inline-block;
+    background-color: var(--accent-green);
+    /* Variasi warna hijau pop untuk membedakan dari Register */
+    padding: 5px 20px;
+    border: 3px solid var(--dark-border);
+    box-shadow: 4px 4px 0px var(--dark-border);
+    transform: rotate(1deg);
+    /* Miring ke arah berlawanan dari Register */
+    margin-bottom: 30px;
+  }
+
   .animal-tag {
     display: inline-block;
     padding: 6px 12px;
@@ -144,15 +180,12 @@
   .tag-yellow {
     background: var(--primary-yellow);
   }
-
   .tag-pink {
     background: var(--accent-pink);
   }
-
   .tag-green {
     background: var(--accent-green);
   }
-
   .tag-blue {
     background: var(--accent-blue);
   }
@@ -162,6 +195,8 @@
     font-weight: 700;
   }
 
+  /* ================= BUTTON BUY ================= */
+
   .btn-buy {
     width: 100%;
     border: 3px solid var(--dark-border);
@@ -170,7 +205,7 @@
     font-weight: 700;
     padding: 10px;
     box-shadow: 4px 4px 0px var(--dark-border);
-    transition: all 0.15s ease;
+    transition: 0.15s ease;
   }
 
   .btn-buy:hover {
@@ -190,6 +225,13 @@
     width: 100%;
   }
 
+  .neo-label {
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: block;
+  }
+
   .neo-input {
     border: 3px solid var(--dark-border) !important;
     border-radius: 0 !important;
@@ -202,6 +244,45 @@
     background-color: #fff;
     border-color: var(--dark-border);
     box-shadow: 4px 4px 0px var(--dark-border) !important;
+    outline: none;
+    transform: translate(-2px, -2px);
+  }
+
+  .neo-checkbox:checked {
+    background: var(--accent-pink) !important;
+  }
+
+  /* ================= BUTTON LOGIN ================= */
+
+  .btn-neo-login-submit {
+    width: 100%;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    background: var(--primary-yellow);
+    border: 3px solid var(--dark-border) !important;
+    padding: 12px !important;
+    box-shadow: 6px 6px 0px var(--dark-border);
+    transition: 0.15s ease;
+  }
+
+  .btn-neo-login-submit:hover {
+    background: var(--accent-pink);
+    color: #fff;
+    transform: translate(-3px, -3px);
+    box-shadow: 9px 9px 0px var(--dark-border);
+  }
+
+  .btn-neo-login-submit:active {
+    transform: translate(6px, 6px);
+    box-shadow: 0px 0px 0px var(--dark-border);
+  }
+
+  /* ================= SEARCH ================= */
+
+  .neo-input-search {
+    border: 3px solid var(--dark-border);
+    padding: 12px;
   }
 
   .neo-btn-search {
@@ -213,6 +294,7 @@
     padding: 0 20px;
     box-shadow: 4px 4px 0px var(--dark-border);
     transition: all 0.15s ease;
+    border: 3px solid var(--dark-border);
   }
 
   .neo-btn-search:hover {
@@ -224,6 +306,49 @@
   .neo-btn-search:active {
     transform: translate(2px, 2px);
     box-shadow: 0px 0px 0px var(--dark-border);
+  }
+
+  /* ================= CODE ================= */
+  /* Code Block Brutal */
+  .neo-code {
+    font-family: "Space Grotesk", monospace;
+    background-color: var(--dark-border);
+    color: #ffffff;
+    font-weight: 700;
+    padding: 3px 8px;
+    border: 1px solid var(--dark-border);
+  }
+
+  /* Badge Status Neobrutal */
+  .badge-status-neo {
+    display: inline-block;
+    padding: 6px 12px;
+    border: 2px solid var(--dark-border);
+    font-weight: 700;
+    text-transform: uppercase;
+    box-shadow: 2px 2px 0px var(--dark-border);
+  }
+
+  .status-available {
+    background-color: #a7c957;
+    color: var(--dark-border);
+  }
+
+  .status-sold {
+    background-color: var(--accent-pink);
+    color: #ffffff;
+  }
+
+  /* Kotak Info Transaksi */
+  .transaction-info-box {
+    padding: 8px 12px;
+    border: 2px dashed var(--dark-border);
+    background-color: #fafafa;
+  }
+
+  .text-no-tx {
+    color: #777777;
+    font-style: italic;
   }
 
   /* ================= TABLE ================= */
@@ -292,6 +417,266 @@
     text-transform: uppercase;
     font-size: 0.9rem;
   }
+  /* ================= FORM REGISTER ================= */
+  .card-register {
+    background-color: #ffffff;
+    border: 4px solid var(--dark-border);
+    box-shadow: 12px 12px 0px 0px var(--dark-border);
+    border-radius: 0px;
+    padding: 40px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+
+    /* Animasi Pop-Up Masuk saat Page Load */
+    opacity: 0;
+    transform: scale(0.9) translateY(30px);
+    animation: popUpIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.2s
+      forwards;
+  }
+
+  .form-title {
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 2rem;
+    letter-spacing: -1px;
+    display: inline-block;
+    background-color: var(--accent-pink);
+    padding: 5px 15px;
+    border: 3px solid var(--dark-border);
+    box-shadow: 4px 4px 0px var(--dark-border);
+    transform: rotate(-1deg);
+    margin-bottom: 30px;
+  }
+  .neo-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%231a1a1a' stroke-width='3' stroke-linecap='square' stroke-linejoin='miter'><path d='M6 9l6 6 6-6'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    cursor: pointer;
+  }
+
+  .btn-neo-submit {
+    width: 100%;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    background-color: var(--primary-yellow);
+    color: var(--dark-border);
+    border: 3px solid var(--dark-border) !important;
+    border-radius: 0px !important;
+    padding: 12px !important;
+    box-shadow: 6px 6px 0px var(--dark-border);
+    transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  .btn-neo-submit:hover {
+    background-color: var(--accent-blue);
+    color: #ffffff;
+  }
+
+  .btn-neo-submit:active {
+    transform: translate(6px, 6px);
+    box-shadow: 0px 0px 0px var(--dark-border);
+  }
+
+  .form-footer-link {
+    color: var(--dark-border);
+    font-weight: 700;
+    text-decoration: underline;
+  }
+
+  /* ================= EDIT STOCK ================= */
+  .neo-form-card {
+    background-color: #ffffff;
+    border: 4px solid var(--dark-border);
+    box-shadow: 12px 12px 0px 0px var(--dark-border);
+    border-radius: 0px;
+    padding: 40px;
+    margin-top: 30px;
+    margin-bottom: 50px;
+
+    /* Animasi Masuk Pop-Up */
+    opacity: 0;
+    transform: scale(0.95) translateY(20px);
+    animation: formPopIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  }
+
+  .form-title-stock {
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 1.8rem;
+    letter-spacing: -1px;
+    display: inline-block;
+    background-color: var(--primary-yellow);
+    padding: 8px 15px;
+    border: 3px solid var(--dark-border);
+    box-shadow: 4px 4px 0px var(--dark-border);
+    transform: rotate(-1.5deg);
+    margin-bottom: 35px;
+  }
+
+  /* --- ERROR BOX STYLE --- */
+  .neo-error-box {
+    background-color: #ffccd5;
+    color: var(--dark-border);
+    border: 3px solid var(--dark-border);
+    box-shadow: 4px 4px 0px var(--dark-border);
+    padding: 15px 20px;
+    border-radius: 0px;
+    margin-bottom: 30px;
+  }
+
+  .neo-error-box h4 {
+    font-weight: 700;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .neo-error-box ul {
+    margin-bottom: 0;
+    padding-left: 20px;
+    font-weight: 500;
+  }
+
+  /* --- FORM CONTROLS --- */
+  .neo-label {
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--dark-border);
+    margin-bottom: 8px;
+    display: block;
+    font-size: 0.95rem;
+  }
+
+  .neo-input {
+    border: 3px solid var(--dark-border) !important;
+    border-radius: 0px !important;
+    padding: 12px 15px;
+    font-weight: 500;
+    background-color: #ffffff;
+    color: var(--dark-border);
+    transition: all 0.15s ease;
+  }
+
+  .neo-input:focus {
+    outline: none !important;
+    box-shadow: 4px 4px 0px 0px var(--dark-border) !important;
+    background-color: #fff7d6;
+    transform: translate(-2px, -2px);
+  }
+
+  .neo-textarea {
+    resize: none;
+    min-height: 120px;
+  }
+
+  /* Input Group Prefix (Rp) */
+  .neo-input-group-text {
+    background-color: var(--dark-border) !important;
+    color: #ffffff !important;
+    border: 3px solid var(--dark-border) !important;
+    border-radius: 0px !important;
+    font-weight: 700;
+  }
+
+  /* --- CURRENT IMAGE PREVIEW --- */
+  .neo-img-preview {
+    border: 4px solid var(--dark-border);
+    box-shadow: 4px 4px 0px var(--dark-border);
+    object-fit: cover;
+    margin-bottom: 15px;
+  }
+
+  /* --- FILE UPLOAD BOX --- */
+  .neo-file-upload-wrapper {
+    position: relative;
+    width: 100%;
+    border: 3px dashed var(--dark-border);
+    background-color: #ffffff;
+    padding: 25px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .neo-file-upload-wrapper:hover {
+    background-color: #fff7d6;
+    border-style: solid;
+  }
+
+  .neo-file-input-hidden {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .neo-file-upload-icon {
+    font-size: 1.8rem;
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  .neo-file-upload-text {
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    color: var(--dark-border);
+  }
+
+  .neo-file-upload-info {
+    font-size: 0.8rem;
+    display: block;
+    margin-top: 5px;
+    font-weight: 500;
+    color: #666;
+  }
+
+  .btn-neo-group {
+    font-weight: 700;
+    text-transform: uppercase;
+    border: 3px solid var(--dark-border) !important;
+    border-radius: 0px !important;
+    padding: 12px 25px !important;
+    box-shadow: 4px 4px 0px var(--dark-border);
+    transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  .btn-neo-group:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 7px 7px 0px var(--dark-border);
+  }
+
+  .btn-neo-group:active {
+    transform: translate(4px, 4px);
+    box-shadow: 0px 0px 0px var(--dark-border);
+  }
+
+  .btn-neo-save {
+    background-color: #a7c957;
+    /* Hijau Brutalis */
+    color: var(--dark-border);
+  }
+
+  .btn-neo-save:hover {
+    background-color: var(--accent-blue);
+    color: #fff;
+  }
+
+  .btn-neo-cancel {
+    background-color: #ffffff;
+    color: var(--dark-border);
+    text-decoration: none;
+    text-align: center;
+  }
+
+  .btn-neo-cancel:hover {
+    background-color: var(--accent-orange);
+  }
 
   /* ================= BADGE ================= */
 
@@ -336,6 +721,50 @@
   .btn-table-delete {
     background-color: #f7a0a0;
     color: var(--dark-border);
+  }
+
+  /* ================= RADIO BUTTON ================= */
+  .neo-radio-wrapper {
+    display: flex;
+    gap: 20px;
+    margin-top: 5px;
+  }
+
+  .neo-radio-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .neo-radio {
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    border: 3px solid var(--dark-border);
+    border-radius: 0px;
+    /* Menghindari lingkaran halus bulat sempurna */
+    background-color: #ffffff;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.1s ease;
+  }
+
+  .neo-radio:checked {
+    background-color: var(--accent-pink);
+    box-shadow: 2px 2px 0px var(--dark-border);
+  }
+
+  .neo-radio:checked::after {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 10px;
+    height: 10px;
+    background-color: var(--dark-border);
   }
 
   /* ================= ICON ================= */
@@ -421,6 +850,8 @@
   /* ================= BACK BUTTON ================= */
 
   .btn-neo-back {
+    background: #fff;
+    border: 3px solid var(--dark-border);
     font-weight: 700;
     text-transform: uppercase;
     background-color: #ffffff;
@@ -478,7 +909,117 @@
     color: var(--dark-border);
   }
 
+  /* ================= FOOTER ================= */
+
+  .neo-footer {
+    border-top: 4px solid var(--dark-border);
+    background: #fff;
+    box-shadow: 0px -8px 0px var(--dark-border);
+    padding: 40px 0;
+    margin-top: 130px;
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+
+  .footer-brand {
+    font-weight: 700;
+    text-transform: uppercase;
+    background: var(--primary-yellow);
+    display: inline-block;
+    padding: 6px 12px;
+    border: 3px solid var(--dark-border);
+    box-shadow: 4px 4px 0px var(--dark-border);
+    transform: rotate(-1deg);
+  }
+
+  .footer-title {
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    border-bottom: 3px solid var(--dark-border);
+    display: inline-block;
+  }
+
+  .footer-text {
+    font-weight: 500;
+    margin-top: 10px;
+  }
+
+  .footer-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .footer-list li {
+    margin-bottom: 8px;
+  }
+
+  .footer-list a {
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--dark-border);
+    text-decoration: none;
+    transition: 0.15s ease;
+  }
+
+  .footer-list a:hover {
+    background: var(--accent-pink);
+    padding: 2px 6px;
+    box-shadow: 3px 3px 0px var(--dark-border);
+    color: #fff;
+  }
+
+  .footer-bottom {
+    border-top: 3px solid var(--dark-border);
+    padding-top: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-align: center;
+  }
+  /* ================= SILHOUETTE BOX ================= */
+
+  .neo-silhouette-box {
+    border: 4px solid var(--dark-border);
+    background: #fff;
+    box-shadow: 8px 8px 0px var(--dark-border);
+    padding: 30px;
+    text-align: center;
+    transition: 0.2s ease;
+  }
+
+  .neo-silhouette-box:hover {
+    transform: translate(-4px, -4px);
+    box-shadow: 12px 12px 0px var(--dark-border);
+  }
+
+  /* ICON COWOK */
+  .male-icon {
+    font-size: 70px;
+    color: var(--accent-blue);
+    display: block;
+  }
+
+  /* ICON CEWEK */
+  .female-icon {
+    font-size: 70px;
+    color: var(--accent-pink);
+    display: block;
+  }
   /* ================= ANIMATION ================= */
+
+  /* --- KEYFRAMES ANIMATION --- */
+  @keyframes formPopIn {
+    0% {
+      opacity: 0;
+      transform: scale(0.95) translateY(20px);
+    }
+
+    100% {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
 
   @keyframes slideInDown {
     0% {

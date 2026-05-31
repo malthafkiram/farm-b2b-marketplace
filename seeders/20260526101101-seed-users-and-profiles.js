@@ -8,7 +8,7 @@ module.exports = {
       "Users",
       [
         {
-          email: "lala@lalacantik.com",
+          email: "lala@cantik.com",
           password: await bcrypt.hash("password123", 10),
           role: "Seller",
           createdAt: new Date(),
@@ -26,7 +26,7 @@ module.exports = {
     );
 
     const lalaUser = insertedUsers.find(
-      (u) => u.email === "lala@lalacantik.com",
+      (u) => u.email === "lala@cantik.com",
     );
     const elshadUser = insertedUsers.find(
       (u) => u.email === "elshad@ganteng.com",
@@ -36,7 +36,7 @@ module.exports = {
       "UserProfiles",
       [
         {
-          fullName: "Lala Elshad",
+          fullName: "Lala Seller",
           phoneNumber: "081234567890",
           address: "Makassar",
           UserId: lalaUser.id,
@@ -44,7 +44,7 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          fullName: "Elshad Lala",
+          fullName: "Elshad Buyer",
           phoneNumber: "089876543210",
           address: "Jakarta Barat",
           UserId: elshadUser.id,

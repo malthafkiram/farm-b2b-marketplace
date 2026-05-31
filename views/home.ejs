@@ -66,12 +66,13 @@
 
                       <% if (userRole==='Seller' ) {%>
                         <button class="btn-buy">
-                          <a style="text-decoration: none; color:black" href="/stock">LIHAT DAFTAR TERNAK</a>
+                          <a style="text-decoration: none; color:black" href="/stock">KELOLA KANDANG SAYA</a>
                         </button>
 
                         <% } else { %>
                           <button class="btn-buy">
-                            <a style="text-decoration: none; color:black" href="/stock">ADD TO CART</a>
+                            <a style="text-decoration: none; color:black; font-weight: 700;"
+                              href="/stock/add-to-cart/<%= p.id %>">🛒 ADD TO CART</a>
                           </button>
                           <% } %>
 

@@ -4,163 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sayap Cinta Farm - Dashboard Peternak</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-
+    <title> Dashboard Seller</title>
+    <%- include('_style') %>
     <style>
-        :root {
-            --bg-color: #f4f1de;
-            /* Warna koran mentah */
-            --primary-yellow: #ffde4d;
-            /* Kuning terang */
-            --accent-blue: #3a86ff;
-            /* Biru pop */
-            --accent-pink: #ff6b6b;
-            /* Pink pop */
-            --accent-green: #2ec4b6;
-            /* Hijau neon */
-            --dark-border: #1a1a1a;
-            /* Border hitam pekat */
-        }
-
-        body {
-            background-color: var(--bg-color);
-            font-family: 'Space Grotesk', sans-serif;
-            padding-bottom: 50px;
-        }
-
-        /* --- TITLE STYLE --- */
-        .page-title {
-            font-weight: 700;
-            text-transform: uppercase;
-            font-size: 2rem;
-            letter-spacing: -1px;
-            display: inline-block;
-            background-color: var(--accent-blue);
-            /* Aksen biru pop untuk dashboard seller */
-            color: #ffffff;
-            padding: 8px 20px;
-            border: 4px solid var(--dark-border);
-            box-shadow: 6px 6px 0px var(--dark-border);
-            transform: rotate(0.5deg);
-            margin-bottom: 30px;
-        }
-
-        /* --- BUTTONS STYLE --- */
-        .btn-neo-back {
-            font-weight: 700;
-            text-transform: uppercase;
-            background-color: #ffffff;
-            color: var(--dark-border) !important;
-            border: 3px solid var(--dark-border) !important;
-            border-radius: 0px !important;
-            padding: 10px 20px;
-            box-shadow: 4px 4px 0px var(--dark-border);
-            transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-neo-back:hover {
-            background-color: var(--primary-yellow);
-            transform: translate(-2px, -2px);
-            box-shadow: 6px 6px 0px var(--dark-border);
-        }
-
-        .btn-neo-back:active {
-            transform: translate(4px, 4px);
-            box-shadow: 0px 0px 0px var(--dark-border);
-        }
-
-        /* --- TABLE NEORUTALISM STYLE --- */
-        .table-responsive-neo {
-            background-color: #ffffff;
-            border: 4px solid var(--dark-border);
-            box-shadow: 12px 12px 0px var(--dark-border);
-            margin-top: 20px;
-
-            /* Animasi Fade In Pop */
-            opacity: 0;
-            transform: translateY(20px);
-            animation: tablePopUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-        }
-
-        .table-neo {
-            margin-bottom: 0px !important;
-        }
-
-        .table-neo thead th {
-            background-color: var(--primary-yellow) !important;
-            color: var(--dark-border) !important;
-            font-weight: 700;
-            text-transform: uppercase;
-            border-bottom: 4px solid var(--dark-border) !important;
-            border-right: 2px solid var(--dark-border);
-            padding: 15px;
-        }
-
-        .table-neo tbody td {
-            border-bottom: 3px solid var(--dark-border) !important;
-            border-right: 2px solid var(--dark-border);
-            padding: 15px;
-            font-weight: 500;
-            vertical-align: middle;
-            color: var(--dark-border);
-        }
-
-        .table-neo tbody tr:last-child td {
-            border-bottom: none !important;
-        }
-
-        .table-neo tbody tr:hover {
-            background-color: rgba(58, 134, 255, 0.08);
-            /* Highlight baris bertema biru */
-        }
-
-        /* Code Block Brutal */
-        .neo-code {
-            font-family: 'Space Grotesk', monospace;
-            background-color: var(--dark-border);
-            color: #ffffff;
-            font-weight: 700;
-            padding: 3px 8px;
-            border: 1px solid var(--dark-border);
-        }
-
-        /* Badge Status Neobrutal */
-        .badge-status-neo {
-            display: inline-block;
-            padding: 6px 12px;
-            border: 2px solid var(--dark-border);
-            font-weight: 700;
-            text-transform: uppercase;
-            box-shadow: 2px 2px 0px var(--dark-border);
-        }
-
-        .status-available {
-            background-color: #a7c957;
-            color: var(--dark-border);
-        }
-
-        .status-sold {
-            background-color: var(--accent-pink);
-            color: #ffffff;
-        }
-
-        /* Kotak Info Transaksi */
-        .transaction-info-box {
-            padding: 8px 12px;
-            border: 2px dashed var(--dark-border);
-            background-color: #fafafa;
-        }
-
-        .text-no-tx {
-            color: #777777;
-            font-style: italic;
-        }
-
-        /* --- KEYFRAMES ANIMATION --- */
+    /* --- KEYFRAMES ANIMATION --- */
         @keyframes tablePopUp {
             0% {
                 opacity: 0;
@@ -176,7 +23,7 @@
 </head>
 
 <body>
-
+    <%- include('_navbar') %>
     <div class="container mt-5">
 
         <div
@@ -268,6 +115,7 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <%- include('_footer') %>
 </body>
 
 </html>

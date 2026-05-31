@@ -3,14 +3,14 @@
 
     <!-- LOGO -->
     <a class="navbar-brand neo-brand" href="/">
-      Qurbani
+      Kandangi
     </a>
 
     <!-- SEARCH -->
     <div class="flex-grow-1 mx-3 d-flex justify-content-center">
-      <form class="neo-search w-100" style="max-width: 600px;">
+      <form class="neo-search w-100" style="max-width: 600px;" action="/" method="GET">
         <div class="input-group">
-          <input type="text" class="form-control neo-input" placeholder="Cari ternak... ayam, kambing, sapi..." />
+          <input type="text" class="form-control neo-input" placeholder="Cari ternak..." name="search" />
           <button class="btn neo-btn-search" type="submit">
             SEARCH
           </button>
@@ -21,13 +21,25 @@
     <!-- RIGHT SECTION -->
     <div class="d-flex align-items-center gap-3 ">
 
-      <!-- USER INFO -->
-      <% if (isLogin) { %>
-        <div class="me-5" style="display: flex; gap: 5px;  ">
-          <p class="m-0 p-0">Welcome, <%= user.UserProfile.fullName %>
+
+    <!-- USER INFO -->
+    <% if (isLogin) { %>
+
+      <% if (userRole === 'Seller') { %>
+        <a href="/seller/dashboard" class="me-5 d-flex align-items-center gap-2 text-decoration-none">
+          <p class="m-0 p-0">
+            Dashboard <%= user?.UserProfile?.fullName || 'User' %>
+          </p>
+        </a>
+      <% } else { %>
+        <div class="me-5 d-flex align-items-center gap-2">
+          <p class="m-0 p-0">
+            Welcome, <%= user?.UserProfile?.fullName || 'User' %>
           </p>
         </div>
-        <% } %>
+      <% } %>
+
+    <% } %>
 
           <% if (userRole==='Seller' ) { %>
             <a href="/stock" class="neo-cart-icon d-flex align-items-center justify-content-center"

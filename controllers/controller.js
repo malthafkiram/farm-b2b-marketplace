@@ -1,4 +1,5 @@
-const { where } = require("sequelize");
+const { where, Op } = require("sequelize");
+// const Op = Sequelize.Op;
 const {
   Livestock,
   UserProfile,
@@ -9,11 +10,12 @@ const {
 const bcrypt = require("bcryptjs");
 class Controller {
   // Home => tampilan utama
+  // Home => tampilan utama (Katalog Pasar Global)
   static async home(req, res) {
     try {
-      // navbar
-      let user = null;
+      const { search } = req.query;
 
+      let user = null;
       if (req.session.userId) {
         user = await User.findOne({
           where: { id: req.session.userId },
@@ -21,12 +23,25 @@ class Controller {
         });
       }
 
-      // list product
       if (req.session.userRole === "Seller") {
-        let products = await Livestock.findAll({
+        let sellerProductOptions = {
           include: User,
           where: { UserId: req.session.userId },
-        });
+          order: [["id", "ASC"]],
+        };
+
+        if (search) {
+          sellerProductOptions.where = {
+            ...sellerProductOptions.where,
+            [Op.or]: [
+              { name: { [Op.iLike]: `%${search}%` } },
+              { type: { [Op.iLike]: `%${search}%` } },
+            ],
+          };
+        }
+
+        let products = await Livestock.findAll(sellerProductOptions);
+
         return res.render("home", {
           userRole: req.session.userRole,
           isLogin: req.session.userId,
@@ -35,7 +50,21 @@ class Controller {
         });
       }
 
-      let products = await Livestock.findAll({});
+      let buyerProductOptions = {
+        where: {},
+        order: [["id", "ASC"]],
+      };
+
+      if (search) {
+        buyerProductOptions.where = {
+          [Op.or]: [
+            { name: { [Op.iLike]: `%${search}%` } },
+            { type: { [Op.iLike]: `%${search}%` } },
+          ],
+        };
+      }
+
+      let products = await Livestock.findAll(buyerProductOptions);
 
       res.render("home", {
         userRole: req.session.userRole,
@@ -89,6 +118,7 @@ class Controller {
       res.render("login", {
         userRole: req.session.userRole,
         isLogin: req.session.userId,
+        notification: req.query.notification || null, // notif
       });
     } catch (error) {
       console.log(error);
@@ -103,14 +133,19 @@ class Controller {
       const user = await User.findOne({ where: { email } });
 
       // validasi kalau usernya gak ada atau passwordnya ga ada
-      if (!user) {
-        return res.send("Email atau password salah!");
-      }
+      // if (!user) {
+      //   return res.send("Email atau password salah!");
+      // }
 
-      const isValidPassword = bcrypt.compareSync(password, user.password);
-
-      if (!isValidPassword) {
-        return res.send("Email atau password salah!");
+      // const isValidPassword = bcrypt.compareSync(password, user.password);
+      const isValidPassword = user
+        ? bcrypt.compareSync(password, user.password)
+        : false;
+      // if (!isValidPassword) {
+      //   return res.send("Email atau password salah!");
+      // }
+      if (!user || !isValidPassword) {
+        return res.redirect("/login?notification=Email atau password salah!");
       }
 
       req.session.userId = user.id;
@@ -135,32 +170,73 @@ class Controller {
       res.send(error);
     }
   }
-  // cart
-  // static async cart(req, res) {
-  //   try {
-  //     res.render("cart");
-  //   } catch (error) {
-  //     console.log(error);
-  //     res.send(error);
-  //   }
-  // }
 
   // stock
   static async getStock(req, res) {
     try {
-      // kita ambil search dan notifikasinya
       const { search, notification } = req.query;
 
-      // buat konfigurasi Eager Loading dasar
-      let options = {
+      // 1. JALUR UNTUK SELLER (PETERNAK)
+      if (req.session.userRole === "Seller") {
+        let sellerOptions = {
+          where: { UserId: req.session.userId }, // Murni hanya mengambil milik peternak yang login
+          include: {
+            model: User,
+            include: { model: UserProfile },
+          },
+          order: [["id", "ASC"]],
+        };
+
+        // Jika Seller melakukan search jenis di halaman kandangnya
+        if (search) {
+          sellerOptions.where.type = { [Op.iLike]: `%${search}%` };
+        }
+
+        // Ambil SEMUA produk milik Seller ini (termasuk yang sudah Terjual agar bisa dipantau)
+        const livestocks = await Livestock.findAll(sellerOptions);
+
+        let user = await User.findOne({
+          where: { id: req.session.userId },
+          include: UserProfile,
+        });
+
+        return res.render("stock", {
+          livestocks,
+          notification,
+          userRole: req.session.userRole,
+          isLogin: req.session.userId,
+          user,
+        });
+      }
+
+      // 2. JALUR UNTUK BUYER (PEMBELI)
+      // Buat objek opsi yang bersih dan terisolasi khusus untuk Buyer
+      let buyerOptions = {
+        where: {},
         include: {
           model: User,
-          include: {
-            model: UserProfile, // Nested Eager Loading untuk mengambil nama lengkap Seller
-          },
+          include: { model: UserProfile },
         },
-        order: [["id", "ASC"]], // Mengurutkan berdasarkan ID terkecil secara default
+        order: [["id", "ASC"]],
       };
+
+      // Ambil array ID dari session keranjang belanja milik Buyer
+      const userCart = req.session.cart || []; // Contoh isinya: [5]
+
+      // Pasang filter agar HANYA mengambil ID hewan yang terdaftar di dalam keranjang belanja
+      buyerOptions.where.id = {
+        [Op.in]: userCart,
+      };
+
+      // Jika Buyer melakukan search di dalam halaman keranjangnya
+      if (search) {
+        buyerOptions.where.type = { [Op.iLike]: `%${search}%` };
+      }
+
+      const livestocks = await Livestock.findAll(buyerOptions);
+
+      // Panggil Static Method bawaan modelmu untuk menyaring yang berstatus 'Tersedia' saja
+      // const livestocks = await Livestock.getAvailableLivestocks(buyerOptions);
 
       let user = null;
       if (req.session.userId) {
@@ -170,17 +246,7 @@ class Controller {
         });
       }
 
-      if (search) {
-        options.where = {
-          type: {
-            [Op.iLike]: `%${search}%`,
-          },
-        };
-      }
-
-      // Panggil Static Method yang sudah kita buat di model Livestock
-      const livestocks = await Livestock.getAvailableLivestocks(options);
-
+      // Render tampilan keranjang belanja khusus Buyer
       res.render("stock", {
         livestocks,
         notification,
@@ -267,6 +333,7 @@ class Controller {
       res.send(error.message);
     }
   }
+  // buy
   static async buy(req, res) {
     try {
       if (req.session.userRole === "Seller") {
@@ -290,6 +357,12 @@ class Controller {
         return res.send("Data ternak tidak ditemukan!");
       }
 
+      if (req.session.cart) {
+        req.session.cart = req.session.cart.filter(
+          (id) => id !== Number(animal.id),
+        );
+      }
+
       // Masukkan data ke tabel junction Transactions (Many-to-Many)
       await Transaction.create({
         UserId: buyerId, // ID Pembeli dinamis dari session
@@ -302,32 +375,49 @@ class Controller {
       await animal.update({ status: "Terjual" });
 
       // Setelah sukses transaksi, kembalikan user ke halaman utama stok
-      res.redirect("/stock");
+      res.redirect("/transactions/history");
     } catch (error) {
       console.log(error);
       res.send(error);
     }
   }
-  // static async productDetail(req, res) {
-  //   try {
-  //     let user = null;
 
-  //     if (req.session.userId) {
-  //       user = await User.findOne({
-  //         where: { id: req.session.userId },
-  //         include: UserProfile,
-  //       });
-  //     }
-  //     res.render("productDetail", {
-  //       userRole: req.session.userRole,
-  //       isLogin: req.session.userId,
-  //       user,
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //     res.send(error);
-  //   }
-  // }
+  // Product Detail
+  static async productDetail(req, res) {
+    try {
+      const { id } = req.params;
+
+      let user = null;
+
+      if (req.session.userId) {
+        user = await User.findOne({
+          where: { id: req.session.userId },
+          include: UserProfile,
+        });
+      }
+
+      const product = await Livestock.findByPk(id, {
+        include: {
+          model: User,
+          include: UserProfile,
+        },
+      });
+
+      if (!product) {
+        return res.send("Produk tidak ditemukan");
+      }
+
+      res.render("productDetail", {
+        product,
+        userRole: req.session.userRole,
+        isLogin: req.session.userId,
+        user,
+      });
+    } catch (error) {
+      console.log(error);
+      res.send(error);
+    }
+  }
 
   static async deleteStock(req, res) {
     try {
@@ -427,7 +517,22 @@ class Controller {
         order: [["id", "ASC"]],
       });
 
-      res.render("sellerDashboard", { myStocks });
+      // navbar
+      let user = null;
+
+      if (req.session.userId) {
+        user = await User.findOne({
+          where: { id: req.session.userId },
+          include: UserProfile,
+        });
+      }
+
+      res.render("sellerDashboard", {
+        myStocks,
+        userRole: req.session.userRole,
+        isLogin: req.session.userId,
+        user,
+      });
     } catch (error) {
       console.log(error);
       res.send(error.message);
@@ -502,6 +607,66 @@ class Controller {
       }
       console.log(error);
       res.send(error.message);
+    }
+  }
+
+  // Add to card
+  static async addToCart(req, res) {
+    try {
+      const { id } = req.params;
+      const buyerId = req.session.userId;
+
+      if (!buyerId) {
+        return res.send(
+          "Anda harus login terlebih dahulu untuk memasukkan ternak ke keranjang!",
+        );
+      }
+
+      // Jika di session belum ada keranjang, buatkan array kosong
+      if (!req.session.cart) {
+        req.session.cart = [];
+      }
+
+      // Masukkan ID produk ke dalam array keranjang session (jika belum ada)
+      if (!req.session.cart.includes(Number(id))) {
+        req.session.cart.push(Number(id));
+      }
+
+      console.log("=== ISI KERANJANG SESSION BUYER ===");
+      console.log(
+        req.session.cart,
+        "<<<< Apakah ID Produk Sudah Muncul di Sini?",
+      );
+      console.log("===================================");
+
+      // Setelah dicatat di session, lempar Buyer ke halaman stock (Keranjang mereka)
+      res.redirect("/stock");
+    } catch (error) {
+      console.log(error);
+      res.send(error.message);
+    }
+  }
+
+  // About
+  static async aboutUs(req, res) {
+    try {
+      // navbar
+      let user = null;
+
+      if (req.session.userId) {
+        user = await User.findOne({
+          where: { id: req.session.userId },
+          include: UserProfile,
+        });
+      }
+      res.render("aboutUs", {
+        userRole: req.session.userRole,
+        isLogin: req.session.userId,
+        user,
+      });
+    } catch (error) {
+      console.log(error);
+      res.send(error);
     }
   }
 }

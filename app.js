@@ -59,18 +59,20 @@ app.post("/register", Controller.register);
 app.get("/login", Controller.formLogin);
 app.post("/login", Controller.login);
 app.get("/logout", Controller.logout);
+app.get("/aboutUs", Controller.aboutUs);
 app.get("/stock", isLoggedIn, Controller.getStock);
 app.get("/stock/add", isLoggedIn, Controller.formAdd);
 app.get("/transactions/history", isLoggedIn, Controller.transactionHistory);
 app.get("/seller/dashboard", isLoggedIn, Controller.sellerDashboard);
 app.post("/stock/add", isLoggedIn, upload.single("image"), Controller.addStock);
+
+app.get("/stock/:id", Controller.productDetail);
+
 app.get("/stock/buy/:id", isLoggedIn, Controller.buy);
 app.get("/stock/delete/:id", isLoggedIn, Controller.deleteStock);
-// Route untuk menampilkan halaman form edit (mengambil data lama berdasarkan ID)
 app.get("/stock/edit/:id", Controller.formEdit);
-
-// Route untuk memproses update data (selipkan middleware upload Multer jika peternak ganti foto)
 app.post("/stock/edit/:id", upload.single("image"), Controller.updateStock);
+app.get("/stock/add-to-cart/:id", Controller.addToCart);
 
 app.listen(port, () => {
   console.log(`I <3 More ${port}`);
